@@ -1,0 +1,198 @@
+import casa.*
+
+describe "comprar viveres" {
+	test "Comprar 20% viveres con estrategia de calidad 2(minimo). Debe quedar 70%viveres y saldo en cta 960" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.viveresActuales(50)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(minimo)
+		casaDePepeYJulian.comprarViveres(20)
+		assert.equals(960, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(70,casaDePepeYJulian.viveresActuales())
+	}
+	
+	test "Comprar 30% viveres con estrategia de calidad 5(full). Debe quedar 80%viveres y saldo en cta 900" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.viveresActuales(50)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(full)
+		casaDePepeYJulian.comprarViveres(30)
+		assert.equals(850, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(80,casaDePepeYJulian.viveresActuales())
+	}
+	
+	
+}
+
+describe "Casa de jose y maria" {
+	test "50% viveres 100 pesos reaparaciones.cta cte 1000 . ahorro full" {
+		casaDeJoseYMaria.cuentaBancaria(cuentaCte)
+		casaDeJoseYMaria.montoParaReparaciones(100)
+		casaDeJoseYMaria.depositarEnCuenta(1000)
+		casaDeJoseYMaria.estrategiaDeAhorro(full)
+		casaDeJoseYMaria.hacerMantenimiento()
+		assert.equals(90, casaDeJoseYMaria.viveresActuales())
+		assert.equals(800, casaDeJoseYMaria.saldoEnCuenta())
+		assert.equals(100, casaDeJoseYMaria.montoParaReparaciones())
+	}
+}
+
+describe "Caso de uso" {
+	
+	test "50% viveres 100 pesos reaparaciones.cta cte 1000 . ahorro full" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.montoParaReparaciones(100)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(full)
+		casaDePepeYJulian.hacerMantenimiento()
+		assert.equals(90, casaDePepeYJulian.viveresActuales())
+		assert.equals(800, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(100, casaDePepeYJulian.montoParaReparaciones())
+		
+	}
+}
+
+describe "Estrategia full" {
+	test "La casa está en orden 50%viveres, se llena de víveres al 100%, siempre con una calidad de 5.
+Gasta 250 50 * 5" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(full)
+		casaDePepeYJulian.hacerMantenimiento()
+		assert.equals(750, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(100,casaDePepeYJulian.viveresActuales())
+		
+	}
+	
+	test "La casa NO está en orden, se llena de víveres un  40%, siempre con una calidad de 5.
+aumenta 40% o sea se va a 70%
+Gasta 200 40 * 5" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(full)
+		casaDePepeYJulian.viveresActuales(30)
+		casaDePepeYJulian.montoParaReparaciones(100)
+		casaDePepeYJulian.hacerMantenimiento()
+		assert.equals(800, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(70,casaDePepeYJulian.viveresActuales())
+		
+	}
+}
+
+describe "Estrategia minimo e indispensable" {
+	test "tiene viveres suficientes asique no se compra nada" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(minimo)
+		casaDePepeYJulian.hacerMantenimiento()
+		assert.equals(1000, casaDePepeYJulian.saldoEnCuenta())
+		
+	}
+	
+	test "tiene viveres 32% Hace mantenimiento minimo. Viveres 40%. Compra 8% por calidad de 2 = 16.Saldo 984" {
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.viveresActuales(32)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.estrategiaDeAhorro(minimo)
+		casaDePepeYJulian.hacerMantenimiento()
+		assert.equals(984, casaDePepeYJulian.saldoEnCuenta())
+		assert.equals(40,casaDePepeYJulian.viveresActuales())
+		
+	}
+	
+	
+}
+
+describe "Gastar" {
+	test "Saldo en cuentaCte. 1000 Gastar 250. quedan 750" {
+		
+		casaDePepeYJulian.cuentaBancaria(cuentaCte)
+		casaDePepeYJulian.depositarEnCuenta(1000)
+		casaDePepeYJulian.generarGasto(250)
+		assert.equals(750, casaDePepeYJulian.saldoEnCuenta())
+		
+	}
+}
+
+describe "Cuenta Combinada" {
+	test "Caso de Prueba. cuenta con gastos queda en 50 pesos, la cuenta cte con 300 pesos y la combindada con 350 pesos." {
+		cuentaConGastos.costoOperacion(50)
+		cuentaCte.saldo(500)
+		cuentaCombinada.primaria(cuentaConGastos)
+		cuentaCombinada.secundaria(cuentaCte)
+		cuentaCombinada.depositar(100)
+		cuentaCombinada.extraer(200)
+		assert.equals(50, cuentaConGastos.saldo())
+		assert.equals(300, cuentaCte.saldo())
+		assert.equals(350, cuentaCombinada.saldo())
+	}
+}
+
+describe "cuenta con gastos" {
+	test "Caso de Prueba: para una cuenta vacía con 20 pesos de costo por operación, si se deposita 1000 pesos, 
+el saldo queda en 980 pesos." {
+		cuentaConGastos.costoOperacion(20)
+		cuentaConGastos.depositar(1000)
+		assert.equals(980, cuentaConGastos.saldo())
+	}
+	
+	test "uenta vacía con 20 pesos de costo por operación, si se deposita 1000 pesos, y extraigo 500 
+el saldo queda en 480 pesos." {
+		cuentaConGastos.costoOperacion(20)
+		cuentaConGastos.depositar(1000)
+		cuentaConGastos.extraer(500)
+		assert.equals(480, cuentaConGastos.saldo())
+	}
+}
+
+describe "cuenta corriente" {
+	test "saldo despues de depositar 1000. (1000)" {
+		cuentaCte.depositar(1000)
+		assert.equals(1000, cuentaCte.saldo())
+	}
+	
+	test "saldo despues de depositar 1000 y extraer 2000. (-1000)" {
+		cuentaCte.depositar(1000)
+		cuentaCte.extraer(2000)
+		assert.equals(-1000, cuentaCte.saldo())
+	}
+	
+}
+
+describe "Caso de Prueba: Hacer que se rompa algo de 1000 pesos de la casa, aumentando el monto de reparación. Verificar que la casa:" {
+	
+	test "Tiene víveres suficientes" {
+		casaDePepeYJulian.montoParaReparaciones(1000)
+		assert.that(casaDePepeYJulian.hayViveresSuficientes())
+
+	}
+	
+	test "Hay que hacer reparaciones" {
+		casaDePepeYJulian.montoParaReparaciones(1000)
+		assert.that(casaDePepeYJulian.hayQueHacerReparaciones())
+	}
+	
+	test "No esta en orden" {
+		casaDePepeYJulian.montoParaReparaciones(1000)
+		assert.that(not casaDePepeYJulian.estaEnOrden())
+	}
+	
+}
+
+describe "Caso de prueba: Bajan viveres al 30%. No hay viveres suficientes . No hay q hacer reaparaciones y la casa no esta en orden" {
+	test "NO Tiene víveres suficientes" {
+		casaDePepeYJulian.viveresActuales(30)
+		assert.that(not casaDePepeYJulian.hayViveresSuficientes())
+
+	}
+	
+	test "NO Hay que hacer reparaciones" {
+		casaDePepeYJulian.viveresActuales(30)
+		assert.that(not casaDePepeYJulian.hayQueHacerReparaciones())
+	}
+	
+	test "No esta en orden" {
+		casaDePepeYJulian.viveresActuales(30)
+		assert.that(not casaDePepeYJulian.estaEnOrden())
+	} 
+}
