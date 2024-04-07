@@ -4,7 +4,7 @@ object casaDePepeYJulian {
 	var viveresActuales = 50 // porcentual
 	var cuentaBancaria = cuentaCte
 	var estrategiaDeAhorro = minimo
-	const viveresMinimos = 40
+	const property viveresMinimos = 40
 
 	method estrategiaDeAhorro(_estrategiaDeAhorro) {
 		estrategiaDeAhorro = _estrategiaDeAhorro
@@ -162,7 +162,6 @@ object cuentaCombinada {
 object minimo {
 
 	var property calidad = 2
-	const property viveresMinimosNecesarios = 40
 
 	method aplicarEn(casa) {
 		if (not casa.hayViveresSuficientes()) {
@@ -171,7 +170,7 @@ object minimo {
 	}
 
 	method calcularViveresAComprar(casa) {
-		return viveresMinimosNecesarios - casa.viveresActuales()
+		return casa.viveresMinimos() - casa.viveresActuales()
 	}
 
 }
