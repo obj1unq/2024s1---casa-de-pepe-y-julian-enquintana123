@@ -72,8 +72,8 @@ object casaDePepeYJulian {
 		cuentaBancaria.extraer(monto)
 	}
 
-	method hacerReparacionesSiSobraSaldo() {
-		if (self.saldoEnCuenta() - montoParaReparaciones > 1000) {
+	method hacerReparacionesSiSobraSaldo(sobraSaldo) {
+		if (sobraSaldo) {
 			self.hacerReparaciones()
 		}
 	}
@@ -188,7 +188,11 @@ object full {
 			// Aumenta un 40%. Como maximo
 			casa.comprarViveres(porcentajeDeAumento)
 		}
-		casa.hacerReparacionesSiSobraSaldo()
+		casa.hacerReparacionesSiSobraSaldo(self.sobraSaldo(casa))
+	}
+	
+	method sobraSaldo(casa) {
+		return casa.saldoEnCuenta() - casa.montoParaReparaciones() > 1000
 	}
 
 	method calcularViveresAComprar(casa) {
@@ -279,8 +283,8 @@ object casaDeJoseYMaria {
 		cuentaBancaria.extraer(monto)
 	}
 
-	method hacerReparacionesSiSobraSaldo() {
-		if (self.saldoEnCuenta() - montoParaReparaciones > 1000) {
+	method hacerReparacionesSiSobraSaldo(sobraSaldo) {
+		if (sobraSaldo) {
 			self.hacerReparaciones()
 		}
 	}
