@@ -161,7 +161,7 @@ object cuentaCombinada {
 //Estrategias de ahorro
 object minimo {
 
-	const property calidad = 2
+	var property calidad = 2
 	const property viveresMinimosNecesarios = 40
 
 	method aplicarEn(casa) {
